@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import yelp from '../api/yelp';
 
 const ResultsShowScreen = ({ navigation }) => {
@@ -21,15 +21,32 @@ const ResultsShowScreen = ({ navigation }) => {
 
     console.log(result);
 
+    if(!result) {
+        return null;
+    }
+
     return (
         <View>
-            <Text>Results Show</Text>
+            <Text>{result.name}</Text>
+            <FlatList data={result.photos}
+            keyExtractor={(photo) => {
+                return photo
+
+            }}
+            renderItem={({item}) => {
+                return <Image style={styles.images} source={{uri: item}} />
+            }}
+            />
         </View>
     )
 }
 
 
 const styles = StyleSheet.create({
+    images: {
+        height: 200,
+        width: 300
+    }
 
 });
 
